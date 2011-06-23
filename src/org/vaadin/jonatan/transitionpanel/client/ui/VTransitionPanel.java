@@ -644,12 +644,16 @@ public class VTransitionPanel extends SimplePanel implements Container,
 	}
 
 	private static enum Transition {
-		FADE_OUT_IN, NONE;
+		FADE_OUT_IN, FADE_OUT, FADE_IN, NONE;
 
 		public Animation getInstance(VTransitionPanel parent, Paintable from, Paintable to) {
 			switch (this) {
 			case FADE_OUT_IN:
 				return new FadeOutInTransition(parent, from, to);
+			case FADE_OUT:
+				return new FadeOutTransition(parent, from, to);
+			case FADE_IN:
+				return new FadeOutInTransition(parent, null, to);
 			case NONE:
 			default:
 				return null;

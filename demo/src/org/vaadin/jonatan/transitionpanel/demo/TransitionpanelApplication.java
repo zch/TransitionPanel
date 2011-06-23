@@ -1,10 +1,19 @@
 package org.vaadin.jonatan.transitionpanel.demo;
 
+import java.util.EnumSet;
+
 import org.vaadin.jonatan.transitionpanel.TransitionPanel;
+import org.vaadin.jonatan.transitionpanel.TransitionPanel.Transition;
 
 import com.vaadin.Application;
-import com.vaadin.ui.*;
+import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 @SuppressWarnings("serial")
 public class TransitionpanelApplication extends Application {
@@ -26,6 +35,19 @@ public class TransitionpanelApplication extends Application {
 		tp.setTransition(TransitionPanel.Transition.FADE_OUT_IN);
 		mainWindow.addComponent(tp);
 
+		ComboBox transitionSelect = new ComboBox();
+		for (TransitionPanel.Transition t : EnumSet.allOf(TransitionPanel.Transition.class)) {
+			transitionSelect.addItem(t);
+		}
+		transitionSelect.addListener(new ValueChangeListener() {
+			public void valueChange(ValueChangeEvent event) {
+				tp.setTransition((Transition) event.getProperty().getValue());
+			}
+		});
+		transitionSelect.setNullSelectionAllowed(false);
+		transitionSelect.select(TransitionPanel.Transition.NONE);
+		mainWindow.addComponent(transitionSelect);
+		
 		Button switchContent = new Button("Switch content", new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
 				if (tp.getContent() == first) {

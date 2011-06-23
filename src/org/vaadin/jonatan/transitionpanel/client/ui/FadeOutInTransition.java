@@ -29,14 +29,14 @@ public class FadeOutInTransition extends Animation {
 			return;
 		}
 		if (progress < 0.5) {
-			fadeOutOld((0.5-progress) * 2);
+			fadeOutOld(progress * 2);
 		} else {
 			fadeInNew((progress - 0.5) * 2);
 		}
 	}
 
 	private void fadeOutOld(double progress) {
-		((Widget) from).getElement().getStyle().setOpacity(progress);
+		((Widget) from).getElement().getStyle().setOpacity(1.0 - progress);
 	}
 
 	private void fadeInNew(double progress) {
@@ -45,7 +45,5 @@ public class FadeOutInTransition extends Animation {
 			parent.replaceLayoutWith(to);
 		}
 		((Widget) to).getElement().getStyle().setOpacity(progress);
-		return;
 	}
-
 }

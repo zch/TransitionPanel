@@ -12,9 +12,9 @@ import com.vaadin.ui.Panel;
 public class TransitionPanel extends Panel {
 
 	public static enum Transition {
-		FADE_OUT_IN, NONE;
+		FADE_OUT_IN, FADE_OUT, FADE_IN, NONE;
 	}
-	
+
 	private int duration = 1000;
 	private Transition transition = Transition.NONE;
 
@@ -25,7 +25,7 @@ public class TransitionPanel extends Panel {
 	public void setDuration(int duration) {
 		this.duration = duration;
 	}
-	
+
 	public void setTransition(Transition transition) {
 		this.transition = transition;
 	}
