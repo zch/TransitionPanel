@@ -2,6 +2,8 @@ package org.vaadin.jonatan.transitionpanel.client.ui;
 
 import java.util.Set;
 
+import org.vaadin.jonatan.transitionpanel.client.ui.VTransitionPanel.Interpolation;
+
 import com.google.gwt.animation.client.Animation;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
@@ -86,7 +88,7 @@ public class VTransitionPanel extends SimplePanel implements Container,
 
 	private String previousStyleName;
 
-	private Animation transition = null;
+	private Transition transition = null;
 
 	private ClickEventHandler clickEventHandler = new ClickEventHandler(this,
 			CLICK_EVENT_IDENTIFIER) {
@@ -99,7 +101,8 @@ public class VTransitionPanel extends SimplePanel implements Container,
 	};
 	private TouchScrollDelegate touchScrollDelegate;
 	private int duration;
-	private Transition transitionType;
+	private TransitionType transitionType;
+	private Interpolation interpolation;
 
 	public VTransitionPanel() {
 		super();
@@ -229,8 +232,11 @@ public class VTransitionPanel extends SimplePanel implements Container,
 		handleError(uidl);
 
 		duration = uidl.getIntAttribute("duration");
-		transitionType = Transition.valueOf(uidl.getStringAttribute("transition"));
-		
+		transitionType = TransitionType.valueOf(uidl
+				.getStringAttribute("transition"));
+		interpolation = Interpolation.valueOf(uidl
+				.getStringAttribute("interpolation"));
+
 		// Render content
 		renderContent(uidl);
 
@@ -294,10 +300,11 @@ public class VTransitionPanel extends SimplePanel implements Container,
 		if (transition != null) {
 			transition.cancel();
 		}
-		if (transitionType == Transition.NONE) {
+		if (transitionType == TransitionType.NONE) {
 			replaceLayoutWith(newLayout);
 		} else {
 			transition = transitionType.getInstance(this, layout, newLayout);
+			transition.setInterpolationMode(interpolation);
 			transition.run(duration);
 		}
 	}
@@ -643,10 +650,11 @@ public class VTransitionPanel extends SimplePanel implements Container,
 		return shortcutHandler;
 	}
 
-	private static enum Transition {
+	private static enum TransitionType {
 		FADE_OUT_IN, FADE_OUT, FADE_IN, SLIDE_UP, SLIDE_DOWN, NONE;
 
-		public Animation getInstance(VTransitionPanel parent, Paintable from, Paintable to) {
+		public Transition getInstance(VTransitionPanel parent, Paintable from,
+				Paintable to) {
 			switch (this) {
 			case FADE_OUT_IN:
 				return new FadeOutInTransition(parent, from, to);
@@ -663,5 +671,9 @@ public class VTransitionPanel extends SimplePanel implements Container,
 				return null;
 			}
 		}
+	}
+
+	protected enum Interpolation {
+		LINEAR, COS, EXPONENTIAL, CIRCULAR, BOUNCE, ELASTIC, QUAD, CUBIC, QUART, QUINT;
 	}
 }

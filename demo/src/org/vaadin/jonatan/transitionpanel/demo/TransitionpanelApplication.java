@@ -3,7 +3,8 @@ package org.vaadin.jonatan.transitionpanel.demo;
 import java.util.EnumSet;
 
 import org.vaadin.jonatan.transitionpanel.TransitionPanel;
-import org.vaadin.jonatan.transitionpanel.TransitionPanel.Transition;
+import org.vaadin.jonatan.transitionpanel.TransitionPanel.Interpolation;
+import org.vaadin.jonatan.transitionpanel.TransitionPanel.TransitionType;
 
 import com.vaadin.Application;
 import com.vaadin.data.Property.ValueChangeListener;
@@ -32,21 +33,35 @@ public class TransitionpanelApplication extends Application {
 
 		final TransitionPanel tp = new TransitionPanel("Transitions!");
 		tp.setContent(first);
-		tp.setTransition(TransitionPanel.Transition.FADE_OUT_IN);
+		tp.setTransitionType(TransitionPanel.TransitionType.FADE_OUT_IN);
 		mainWindow.addComponent(tp);
 
 		ComboBox transitionSelect = new ComboBox();
-		for (TransitionPanel.Transition t : EnumSet.allOf(TransitionPanel.Transition.class)) {
+		for (TransitionType t : EnumSet.allOf(TransitionType.class)) {
 			transitionSelect.addItem(t);
 		}
 		transitionSelect.addListener(new ValueChangeListener() {
 			public void valueChange(ValueChangeEvent event) {
-				tp.setTransition((Transition) event.getProperty().getValue());
+				tp.setTransitionType((TransitionType) event.getProperty().getValue());
 			}
 		});
 		transitionSelect.setNullSelectionAllowed(false);
-		transitionSelect.select(TransitionPanel.Transition.NONE);
+		transitionSelect.select(TransitionType.NONE);
 		mainWindow.addComponent(transitionSelect);
+		
+		ComboBox interpolateSelect = new ComboBox();
+		for (Interpolation t : EnumSet.allOf(Interpolation.class)) {
+			interpolateSelect.addItem(t);
+		}
+		interpolateSelect.addListener(new ValueChangeListener() {
+			public void valueChange(ValueChangeEvent event) {
+				tp.setInterpolation((Interpolation) event.getProperty().getValue());
+			}
+		});
+		interpolateSelect.setNullSelectionAllowed(false);
+		interpolateSelect.select(Interpolation.COS);
+		mainWindow.addComponent(interpolateSelect);
+
 		
 		Button switchContent = new Button("Switch content", new Button.ClickListener() {
 			public void buttonClick(ClickEvent event) {
