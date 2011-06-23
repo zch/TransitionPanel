@@ -644,7 +644,7 @@ public class VTransitionPanel extends SimplePanel implements Container,
 	}
 
 	private static enum Transition {
-		FADE_OUT_IN, FADE_OUT, FADE_IN, NONE;
+		FADE_OUT_IN, FADE_OUT, FADE_IN, SLIDE_UP, SLIDE_DOWN, NONE;
 
 		public Animation getInstance(VTransitionPanel parent, Paintable from, Paintable to) {
 			switch (this) {
@@ -654,6 +654,10 @@ public class VTransitionPanel extends SimplePanel implements Container,
 				return new FadeOutTransition(parent, from, to);
 			case FADE_IN:
 				return new FadeOutInTransition(parent, null, to);
+			case SLIDE_UP:
+				return new SlideUpTransition(parent, from, to);
+			case SLIDE_DOWN:
+				return new SlideDownTransition(parent, from, to);
 			case NONE:
 			default:
 				return null;

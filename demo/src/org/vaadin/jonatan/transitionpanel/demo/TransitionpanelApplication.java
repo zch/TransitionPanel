@@ -25,10 +25,10 @@ public class TransitionpanelApplication extends Application {
 		Window mainWindow = new Window("Transitionpanel Application");
 		
 		first = new VerticalLayout();
-		first.addComponent(new Label("First!!"));
+		first.addComponent(new Label("First!!<br><br><br>foo", Label.CONTENT_XHTML));
 		
 		second = new VerticalLayout();
-		second.addComponent(new Label("Second!!"));
+		second.addComponent(new Label("Second!!<br><br><br>bar", Label.CONTENT_XHTML));
 
 		final TransitionPanel tp = new TransitionPanel("Transitions!");
 		tp.setContent(first);

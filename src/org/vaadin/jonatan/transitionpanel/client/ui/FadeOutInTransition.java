@@ -1,21 +1,12 @@
 package org.vaadin.jonatan.transitionpanel.client.ui;
 
-import com.google.gwt.animation.client.Animation;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.terminal.gwt.client.Paintable;
 
-public class FadeOutInTransition extends Animation {
-
-	private final VTransitionPanel parent;
-	private final Paintable from;
-	private final Paintable to;
-	private boolean switched;
+public class FadeOutInTransition extends Transition {
 
 	public FadeOutInTransition(VTransitionPanel parent, Paintable from, Paintable to) {
-		this.parent = parent;
-		this.from = from;
-		this.to = to;
-		switched = false;
+		super(parent, from, to);
 	}
 
 	@Override
@@ -40,10 +31,7 @@ public class FadeOutInTransition extends Animation {
 	}
 
 	private void fadeInNew(double progress) {
-		if (!switched) {
-			switched = true;
-			parent.replaceLayoutWith(to);
-		}
+		switchPaintablesOnce();
 		((Widget) to).getElement().getStyle().setOpacity(progress);
 	}
 }
