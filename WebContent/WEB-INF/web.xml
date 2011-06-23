@@ -14,7 +14,13 @@
 			<description>
 			Vaadin application class to start</description>
 			<param-name>application</param-name>
-			<param-value>org.vaadin.jonatan.transitionpanel.TransitionpanelApplication</param-value>
+			<param-value>org.vaadin.jonatan.transitionpanel.demo.TransitionpanelApplication</param-value>
+		</init-param>
+		<init-param>
+			<description>
+			Application widgetset</description>
+			<param-name>widgetset</param-name>
+			<param-value>org.vaadin.jonatan.transitionpanel.TransitionpanelWidgetset</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
