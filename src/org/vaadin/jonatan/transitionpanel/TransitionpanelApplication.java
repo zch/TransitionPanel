@@ -1,4 +1,4 @@
-package com.example.transitionpanel;
+package org.vaadin.jonatan.transitionpanel;
 
 import com.vaadin.Application;
 import com.vaadin.ui.*;
